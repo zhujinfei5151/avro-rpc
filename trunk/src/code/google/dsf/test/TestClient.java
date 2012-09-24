@@ -115,7 +115,7 @@ public class TestClient extends AbstractPerformaceTestClient {
   }
 
   public TestClient() {
-    client = new RPCClient("192.168.1.232", 7001, transceiver);
+    client = new RPCClient("localhost", 7001, transceiver);
   }
 
   @SuppressWarnings("unused")
@@ -236,8 +236,8 @@ public class TestClient extends AbstractPerformaceTestClient {
    */
   @Override
   public void doAction() throws Exception {
-    this.testList_avro_Async();
-    // this.testReturnDTO_avro_Async();
+    //this.testList_avro_Async();
+     this.testReturnDTO_avro_Async();
     // this.testLis_Async_Other(SerializerFactory.SERIALIZER_JSON);
     // this.testReturnDTO_Async_Other(SerializerFactory.SERIALIZER_JSON);
   }
