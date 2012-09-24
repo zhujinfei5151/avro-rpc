@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/avro-1.5.4.jar"/>
+	<classpathentry kind="lib" path="lib/avro-ipc-1.5.4.jar"/>
+	<classpathentry kind="lib" path="lib/fastjson-1.1.23.jar" sourcepath="/fastjson"/>
+	<classpathentry kind="lib" path="lib/hessina-3.2.0.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-core-asl-1.8.1.jar"/>
+	<classpathentry kind="lib" path="lib/jackson-mapper-asl-1.8.1.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-1.2.16.jar"/>
+	<classpathentry kind="lib" path="lib/netty-3.2.7.Final.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

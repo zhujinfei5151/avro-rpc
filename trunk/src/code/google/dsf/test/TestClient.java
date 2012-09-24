@@ -1,0 +1,245 @@
+package code.google.dsf.test;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.avro.Protocol;
+import org.apache.avro.Protocol.Message;
+import org.apache.avro.generic.GenericData;
+import org.apache.avro.generic.GenericRecord;
+import org.apache.avro.util.Utf8;
+
+import code.google.dsf.client.IClient;
+import code.google.dsf.client.RPCClient;
+import code.google.dsf.serialize.AvroSerializer;
+import code.google.dsf.serialize.SerializerFactory;
+
+@SuppressWarnings("static-access")
+public class TestClient extends AbstractPerformaceTestClient {
+
+  private IClient client;
+  static GenericRecord avroparams = null;
+  static TestDTO testDTO;
+  static String methodName = "testReturnDTO_avro";
+  static int listsize = 1;
+  static GenericRecord avrolist;
+  static List<TestDTO> dtoList;
+  static Protocol protocol;
+
+  static {
+    // 为AVRO序列化注册协议文件
+    AvroSerializer avroSerializer =
+        (AvroSerializer) SerializerFactory.getSerializer(SerializerFactory.SERIALIZER_AVRO);
+    try {
+      protocol =
+          avroSerializer.registerAvroProtocol(TestServerImp.BEANAME,
+              "code/google/dsf/test/test.avpr");
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    iniParamers();
+  }
+
+  /**
+   * 准备测试数据
+   */
+  @SuppressWarnings("unused")
+  private static void iniParamers() {
+    testDTO = new TestDTO();
+    testDTO.setItemid(1);
+    testDTO.setLogid("186aea4e921f25fc512fc66612f9d789");
+    testDTO.setImei("10086001");
+    testDTO.setUserid(1);
+    testDTO.setSid("111111");
+    testDTO.setFlowSize(Double.valueOf(10));
+    testDTO.setBeginTime(new Date());
+    testDTO.setEndTime(new Date());
+    testDTO.setHomecountry(1);
+    testDTO.setVisitcountry(1);
+
+    Message message = protocol.getMessages().get(methodName);
+    avroparams = new GenericData.Record(message.getRequest());
+    GenericRecord record = new GenericData.Record(message.getRequest().getField("data").schema());
+
+    record.put("itemid", 1);
+    record.put("logid", new Utf8(testDTO.getLogid()));
+    record.put("imei", new Utf8(testDTO.getImei()));
+    record.put("uid", testDTO.getUserid());
+    record.put("sid", new Utf8(testDTO.getSid()));
+    record.put("flowSize", testDTO.getFlowSize());
+    record.put("beginTime", new Utf8("2012-01-01 12:00:00"));
+    record.put("endTime", new Utf8("2012-11-01 12:00:00"));
+    record.put("homecountry", 1);
+    record.put("visitcountry", 1);
+    avroparams.put("data", record);
+
+    avrolist = new GenericData.Record(protocol.getMessages().get("testList_avro").getRequest());
+
+    GenericData.Array<GenericRecord> listrecord =
+        new GenericData.Array<GenericRecord>(listsize, protocol.getMessages().get("testList_avro")
+            .getRequest().getField("data").schema());
+
+    dtoList = new ArrayList<TestDTO>();
+    for (int i = 0; i < listsize; i++) {
+      TestDTO dto = new TestDTO();
+      dto.setItemid(i);
+      dto.setLogid("186aea4e921f25fc512fc66612f9d789");
+      dto.setImei("10086001");
+      dto.setUserid(1);
+      dto.setSid("111111");
+      dto.setFlowSize(Double.valueOf(10));
+      dto.setBeginTime(new Date());
+      dto.setEndTime(new Date());
+      dto.setHomecountry(1);
+      dto.setVisitcountry(1);
+      dtoList.add(dto);
+
+      GenericRecord irecord =
+          new GenericData.Record(message.getRequest().getField("data").schema());
+
+      irecord.put("itemid", i);
+      irecord.put("logid", new Utf8(testDTO.getLogid()));
+      irecord.put("imei", new Utf8(testDTO.getImei()));
+      irecord.put("uid", testDTO.getUserid());
+      irecord.put("sid", new Utf8(testDTO.getSid()));
+      irecord.put("flowSize", testDTO.getFlowSize());
+      irecord.put("beginTime", new Utf8("2012-01-01 12:00:00"));
+      irecord.put("endTime", new Utf8("2012-11-01 12:00:00"));
+      irecord.put("homecountry", 1);
+      irecord.put("visitcountry", 1);
+      listrecord.add(irecord);
+    }
+    avrolist.put(0, listrecord);
+  }
+
+  public TestClient() {
+    client = new RPCClient("192.168.1.232", 7001, transceiver);
+  }
+
+  @SuppressWarnings("unused")
+  private void testReturnDTO_avro() {
+    try {
+      Object obj =
+          this.client.invokeSync(TestServerImp.BEANAME, methodName, null,
+              new Object[] {avroparams}, null, SerializerFactory.SERIALIZER_AVRO);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  @SuppressWarnings("unused")
+  private void testReturnDTO_avro_Async() {
+    try {
+      this.client.invokeAsync(TestServerImp.BEANAME, methodName, null, new Object[] {avroparams},
+          null, SerializerFactory.SERIALIZER_AVRO, this);
+    } catch (Exception e) {
+      if (this.callBack != null) {
+        this.callBack.handleError(e);
+      }
+    }
+  }
+
+  @SuppressWarnings("unused")
+  private void testList_avro() {
+    try {
+      Object obj =
+          this.client.invokeSync(TestServerImp.BEANAME, "testList_avro", null,
+              new Object[] {avrolist}, null, SerializerFactory.SERIALIZER_AVRO);
+      System.out.println(obj);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
+  private void testList_avro_Async() {
+    try {
+      this.client.invokeAsync(TestServerImp.BEANAME, "testList_avro", null,
+          new Object[] {avrolist}, null, SerializerFactory.SERIALIZER_AVRO, this);
+    } catch (Exception e) {
+      e.printStackTrace();
+      if (this.callBack != null) {
+        this.callBack.handleError(e);
+      }
+    }
+  }
+
+  @SuppressWarnings("unused")
+  private void testReturnDTO_Async_Other(byte contentType) {
+    try {
+      this.client.invokeAsync(TestServerImp.BEANAME, "testReturnDTO", null, new Object[] {testDTO},
+          TestDTO.class, contentType, this);
+    } catch (Exception e) {
+      if (this.callBack != null) {
+        this.callBack.handleError(e);
+      }
+    }
+  }
+
+  @SuppressWarnings("unused")
+  private void testReturnDTO_Other(byte contentType) {
+    try {
+      Object obj =
+          this.client.invokeSync(TestServerImp.BEANAME, "testReturnDTO", null,
+              new Object[] {testDTO}, testDTO.getClass(), contentType);
+      System.out.println(obj);
+    } catch (Exception e) {
+      e.printStackTrace();
+      if (this.callBack != null) {
+        this.callBack.handleError(e);
+      }
+    }
+  }
+
+  @SuppressWarnings("unused")
+  private void testLis_Async_Other(byte contentType) {
+    try {
+      this.client.invokeAsync(TestServerImp.BEANAME, "testLis", null, new Object[] {dtoList},
+          dtoList.getClass(), contentType, this);
+    } catch (Exception e) {
+      if (this.callBack != null) {
+        this.callBack.handleError(e);
+      }
+    }
+  }
+
+  private void testLis_Other(byte contentType) {
+    try {
+      Object obj =
+          this.client.invokeSync(TestServerImp.BEANAME, "testLis", null, new Object[] {dtoList},
+              dtoList.getClass(), contentType);
+      System.out.println(obj);
+    } catch (Exception e) {
+      e.printStackTrace();
+      if (this.callBack != null) {
+        this.callBack.handleError(e);
+      }
+    }
+  }
+
+  public static void main(String[] args) {
+    TestClient test = new TestClient();
+
+    test.testReturnDTO_avro();
+    test.testList_avro();
+    test.testList_avro_Async();
+    test.testLis_Other(SerializerFactory.SERIALIZER_HESSIAN);
+    test.testLis_Other(SerializerFactory.SERIALIZER_JAVA);
+
+    test.testLis_Other(SerializerFactory.SERIALIZER_JSON);
+  }
+
+
+  /**
+   * 性能测试测试接口
+   */
+  @Override
+  public void doAction() throws Exception {
+    this.testList_avro_Async();
+    // this.testReturnDTO_avro_Async();
+    // this.testLis_Async_Other(SerializerFactory.SERIALIZER_JSON);
+    // this.testReturnDTO_Async_Other(SerializerFactory.SERIALIZER_JSON);
+  }
+
+}
