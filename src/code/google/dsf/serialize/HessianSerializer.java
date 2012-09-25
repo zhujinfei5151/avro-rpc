@@ -2,7 +2,7 @@ package code.google.dsf.serialize;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.avro.util.ByteBufferInputStream;
@@ -33,7 +33,7 @@ public class HessianSerializer implements ISerializer {
     if (buffer == null || buffer.limit() == 0) {
       return null;
     }
-    List<ByteBuffer> lists = new LinkedList<ByteBuffer>();
+    List<ByteBuffer> lists = new ArrayList<ByteBuffer>();
     lists.add(buffer);
     ByteBufferInputStream buffinputStream = new ByteBufferInputStream(lists);
     try {

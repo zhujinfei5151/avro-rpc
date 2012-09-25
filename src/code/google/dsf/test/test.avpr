@@ -93,6 +93,23 @@
             ],
             "response":"TestDTO"
         },
+        "testSimpletypes_avro":{
+            "description ":"测试简单类型",
+            "doc":"",
+            "request":[
+               {
+                    "name":"id",
+                    "type":"int",
+                    "doc":"数字类型"
+                },
+                {
+                    "name":"str",
+                    "type":"string",
+                    "doc":"字符串类型"
+                }
+            ],
+            "response":"string"
+        },
         "testList_avro":{
             "description ":"测试List",
             "doc":"/res/dispatcherVsim",
