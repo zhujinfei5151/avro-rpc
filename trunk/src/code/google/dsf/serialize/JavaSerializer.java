@@ -4,7 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.nio.ByteBuffer;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.avro.util.ByteBufferInputStream;
@@ -34,7 +34,7 @@ public class JavaSerializer implements ISerializer {
       if(buffer == null || buffer.limit() == 0){
           return null;
       }
-      List<ByteBuffer> lists = new LinkedList<ByteBuffer>();
+      List<ByteBuffer> lists = new ArrayList<ByteBuffer>();
       lists.add(buffer);
       ByteBufferInputStream buffinputStream = new ByteBufferInputStream(lists);
       ObjectInputStream inputStream = new ObjectInputStream(buffinputStream);

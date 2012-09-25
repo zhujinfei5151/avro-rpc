@@ -2,8 +2,8 @@ package code.google.dsf.server.rpc;
 
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -62,13 +62,14 @@ public class RPCProtocolHandler implements IRPCProtocolHandler {
       SerializerContext context = new SerializerContext();
       context.setParameterTypes(method.getParameterTypes());
       context.setRpcMetaDTO(rcpMeta);
-      Object args =
+      Object args = null;
+      if( dataPack.getDatas().size() > 1){
+        args =
           SerializerFactory.getSerializer(dataPack.getContentType()).deserialize(
               dataPack.getDatas().get(1), context);
-
+      }
+      
       Object instance = processors.get(rcpMeta.getBeanName());
-      
-      
       // AVRO paramers
       if(args instanceof GenericRecord){
         Object[] paramers = new Object[method.getParameterTypes().length];
@@ -94,7 +95,7 @@ public class RPCProtocolHandler implements IRPCProtocolHandler {
    * @return
    */
   public List<ByteBuffer> putRespond(Object result, byte contentType, RPCMetaDTO rcpMeta) {
-    List<ByteBuffer> buffers = new LinkedList<ByteBuffer>();
+    List<ByteBuffer> buffers = new ArrayList<ByteBuffer>();
     // 无返回值情况
     if (result == null) {
       buffers.add(RESPOND_TRUE);

@@ -191,6 +191,45 @@ public class TestClient extends AbstractPerformaceTestClient {
       }
     }
   }
+  
+  public void testSimpletypes_Other(byte contentType) {
+    try {
+      Object obj =
+          this.client.invokeSync(TestServerImp.BEANAME, "testSimpletypes", null,
+              new Object[] {100,"hello"}, String.class, contentType);
+      System.out.println(obj);
+    } catch (Exception e) {
+      e.printStackTrace();
+      if (this.callBack != null) {
+        this.callBack.handleError(e);
+      }
+    }
+  }
+  
+  public void testNull_Other(byte contentType) {
+    try {
+      Object obj =
+          this.client.invokeSync(TestServerImp.BEANAME, "testNull", null,
+              null, null, contentType);
+      System.out.println("is null "+(obj == null));
+    } catch (Exception e) {
+      e.printStackTrace();
+      if (this.callBack != null) {
+        this.callBack.handleError(e);
+      }
+    }
+  }
+  
+  public void testSimpletypes_avro() throws Exception {
+    String methodName = "testSimpletypes_avro";
+    GenericRecord record = new GenericData.Record(protocol.getMessages().get(methodName).getRequest());
+    record.put("id", 1000);
+    record.put("str", new Utf8("hello"));
+    Object obj =
+      this.client.invokeSync(TestServerImp.BEANAME, methodName, null,
+          new Object[] {record}, null, SerializerFactory.SERIALIZER_AVRO);
+  System.out.println(obj);
+  }
 
   @SuppressWarnings("unused")
   private void testLis_Async_Other(byte contentType) {
@@ -218,16 +257,28 @@ public class TestClient extends AbstractPerformaceTestClient {
     }
   }
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws Exception {
     TestClient test = new TestClient();
 
     test.testReturnDTO_avro();
     test.testList_avro();
     test.testList_avro_Async();
+    
     test.testLis_Other(SerializerFactory.SERIALIZER_HESSIAN);
     test.testLis_Other(SerializerFactory.SERIALIZER_JAVA);
-
     test.testLis_Other(SerializerFactory.SERIALIZER_JSON);
+    
+    test.testSimpletypes_Other(SerializerFactory.SERIALIZER_HESSIAN);
+    test.testSimpletypes_Other(SerializerFactory.SERIALIZER_JAVA);
+    test.testSimpletypes_Other(SerializerFactory.SERIALIZER_JSON);
+    
+    test.testNull_Other(SerializerFactory.SERIALIZER_HESSIAN);
+    test.testNull_Other(SerializerFactory.SERIALIZER_JAVA);
+    test.testNull_Other(SerializerFactory.SERIALIZER_JSON);
+    
+    test.testSimpletypes_avro();
+    
+    
   }
 
 

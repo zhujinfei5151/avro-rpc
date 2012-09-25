@@ -2,7 +2,6 @@ package code.google.dsf.protocol;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.jboss.netty.buffer.ChannelBuffer;
@@ -122,7 +121,7 @@ public class NettyTransportCodec {
       dataPack.setMessageType(messageType);
       dataPack.setProtocolType(protocolType);
       dataPack.setContentType(contentType);
-      List<ByteBuffer> datas = new LinkedList<ByteBuffer>();
+      List<ByteBuffer> datas = new ArrayList<ByteBuffer>();
       dataPack.setDatas(datas);
       for (int i = 0; i < listSize; i++) {
         int length = in.readInt();
