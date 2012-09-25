@@ -56,8 +56,7 @@ public class AvroSerializer implements ISerializer {
   public static Protocol registerAvroProtocol(String beanName, String fileclasspath)
       throws IOException {
     ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-    String file = classLoader.getResource(fileclasspath).getFile();
-    Protocol avroprotocol = Protocol.parse(new File(file));
+    Protocol avroprotocol = Protocol.parse(classLoader.getResourceAsStream(fileclasspath));
     protocolmap.put(beanName, avroprotocol);
     return avroprotocol;
   }
