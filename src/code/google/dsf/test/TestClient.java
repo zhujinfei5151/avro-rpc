@@ -114,8 +114,8 @@ public class TestClient extends AbstractPerformaceTestClient {
     avrolist.put(0, listrecord);
   }
 
-  public TestClient() {
-    client = new RPCClient("localhost", 7001, transceiver);
+  public TestClient(String IP, int port) {
+    client = new RPCClient(IP, port, transceiver);
   }
 
   @SuppressWarnings("unused")
@@ -191,12 +191,12 @@ public class TestClient extends AbstractPerformaceTestClient {
       }
     }
   }
-  
+
   public void testSimpletypes_Other(byte contentType) {
     try {
       Object obj =
-          this.client.invokeSync(TestServerImp.BEANAME, "testSimpletypes", null,
-              new Object[] {100,"hello"}, String.class, contentType);
+          this.client.invokeSync(TestServerImp.BEANAME, "testSimpletypes", null, new Object[] {100,
+              "hello"}, String.class, contentType);
       System.out.println(obj);
     } catch (Exception e) {
       e.printStackTrace();
@@ -205,13 +205,12 @@ public class TestClient extends AbstractPerformaceTestClient {
       }
     }
   }
-  
+
   public void testNull_Other(byte contentType) {
     try {
       Object obj =
-          this.client.invokeSync(TestServerImp.BEANAME, "testNull", null,
-              null, null, contentType);
-      System.out.println("is null "+(obj == null));
+          this.client.invokeSync(TestServerImp.BEANAME, "testNull", null, null, null, contentType);
+      System.out.println("is null " + (obj == null));
     } catch (Exception e) {
       e.printStackTrace();
       if (this.callBack != null) {
@@ -219,16 +218,17 @@ public class TestClient extends AbstractPerformaceTestClient {
       }
     }
   }
-  
+
   public void testSimpletypes_avro() throws Exception {
     String methodName = "testSimpletypes_avro";
-    GenericRecord record = new GenericData.Record(protocol.getMessages().get(methodName).getRequest());
+    GenericRecord record =
+        new GenericData.Record(protocol.getMessages().get(methodName).getRequest());
     record.put("id", 1000);
     record.put("str", new Utf8("hello"));
     Object obj =
-      this.client.invokeSync(TestServerImp.BEANAME, methodName, null,
-          new Object[] {record}, null, SerializerFactory.SERIALIZER_AVRO);
-  System.out.println(obj);
+        this.client.invokeSync(TestServerImp.BEANAME, methodName, null, new Object[] {record},
+            null, SerializerFactory.SERIALIZER_AVRO);
+    System.out.println(obj);
   }
 
   @SuppressWarnings("unused")
@@ -258,27 +258,27 @@ public class TestClient extends AbstractPerformaceTestClient {
   }
 
   public static void main(String[] args) throws Exception {
-    TestClient test = new TestClient();
+    TestClient test = new TestClient("localhost", 7001);
 
     test.testReturnDTO_avro();
     test.testList_avro();
     test.testList_avro_Async();
-    
+
     test.testLis_Other(SerializerFactory.SERIALIZER_HESSIAN);
     test.testLis_Other(SerializerFactory.SERIALIZER_JAVA);
     test.testLis_Other(SerializerFactory.SERIALIZER_JSON);
-    
+
     test.testSimpletypes_Other(SerializerFactory.SERIALIZER_HESSIAN);
     test.testSimpletypes_Other(SerializerFactory.SERIALIZER_JAVA);
     test.testSimpletypes_Other(SerializerFactory.SERIALIZER_JSON);
-    
+
     test.testNull_Other(SerializerFactory.SERIALIZER_HESSIAN);
     test.testNull_Other(SerializerFactory.SERIALIZER_JAVA);
     test.testNull_Other(SerializerFactory.SERIALIZER_JSON);
-    
+
     test.testSimpletypes_avro();
-    
-    
+
+
   }
 
 
@@ -286,10 +286,10 @@ public class TestClient extends AbstractPerformaceTestClient {
    * 性能测试测试接口
    */
   public void doAction() throws Exception {
-    //this.testList_avro_Async();
-     this.testReturnDTO_avro_Async();
+    // this.testList_avro_Async();
+    this.testReturnDTO_avro_Async();
     // this.testLis_Async_Other(SerializerFactory.SERIALIZER_JSON);
-    // this.testReturnDTO_Async_Other(SerializerFactory.SERIALIZER_JSON);
+    // this.testReturnDTO_Async_Other(SerializerFactory.SERIALIZER_JAVA);
   }
 
 }
