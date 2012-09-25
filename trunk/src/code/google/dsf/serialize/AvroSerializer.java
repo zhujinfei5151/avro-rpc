@@ -66,7 +66,6 @@ public class AvroSerializer implements ISerializer {
     return protocolmap.get(beanName);
   }
 
-  @Override
   public Object deserialize(ByteBuffer buffer, SerializerContext context) {
     Schema schema = context.getSchema();
     if(schema == null){
@@ -86,7 +85,7 @@ public class AvroSerializer implements ISerializer {
     }
   }
 
-  @Override
+  
   public ByteBuffer serialize(Object obj, SerializerContext context) {
     Object arg = obj;
     if(context.isRequest()){

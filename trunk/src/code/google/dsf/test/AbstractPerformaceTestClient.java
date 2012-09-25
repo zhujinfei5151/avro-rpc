@@ -23,37 +23,36 @@ public abstract class AbstractPerformaceTestClient implements Callback, IPerform
 
   protected Callback callBack;
 
-  @Override
+
   public void doInitialize() {}
 
 
-  @Override
+
   public void setCallback(Callback callback) {
     this.callBack = callback;
   }
 
-  @Override
+
   public void setSession() {
 
   }
 
-  @Override
+
   public void doEnd() {
 
   }
 
-  @Override
+
   public IPerformanceTestTask getNewTask() {
     return null;
   }
 
-  @Override
+
   public boolean onlyoneTask() {
     return true;
   }
 
   @SuppressWarnings("unchecked")
-  @Override
   public void handleError(Throwable arg0) {
     if (this.callBack != null) {
       this.callBack.handleError(arg0);
@@ -61,7 +60,6 @@ public abstract class AbstractPerformaceTestClient implements Callback, IPerform
   }
 
   @SuppressWarnings("unchecked")
-  @Override
   public void handleResult(Object arg0) {
     if (this.callBack != null) {
       this.callBack.handleResult(arg0);

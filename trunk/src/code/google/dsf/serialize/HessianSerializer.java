@@ -28,7 +28,6 @@ public class HessianSerializer implements ISerializer {
     static HessianSerializer _instance = new HessianSerializer();
   }
 
-  @Override
   public Object deserialize(ByteBuffer buffer, SerializerContext context) {
     if (buffer == null || buffer.limit() == 0) {
       return null;
@@ -46,7 +45,6 @@ public class HessianSerializer implements ISerializer {
     } 
   }
 
-  @Override
   public ByteBuffer serialize(Object obj, SerializerContext context) {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     try {

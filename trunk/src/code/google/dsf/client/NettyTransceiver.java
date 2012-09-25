@@ -153,7 +153,7 @@ public class NettyTransceiver implements ITransceiver {
     bootstrap = new ClientBootstrap(channelFactory);
     if (OneInstanceOneConnecton) {
       bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
-        @Override
+       
         public ChannelPipeline getPipeline() throws Exception {
           ChannelPipeline p = Channels.pipeline();
 
@@ -232,7 +232,6 @@ public class NettyTransceiver implements ITransceiver {
   }
 
 
-  @Override
   public void transceive(String ip,int port,ProtocolPack protocolPack, Callback<List<ByteBuffer>> callback) throws IOException {
       addRequstHandleMap(callback, protocolPack.getSerial());
       writeDataPack(ip, port, protocolPack);
@@ -302,7 +301,6 @@ public class NettyTransceiver implements ITransceiver {
       this.serial = serial;
     }
 
-    @Override
     public void run(Timeout timeout) throws Exception {
       @SuppressWarnings("rawtypes")
       Callback callback = requests.remove(serial);
@@ -367,7 +365,7 @@ public class NettyTransceiver implements ITransceiver {
       this.prefix = prefix;
     }
 
-    @Override
+    
     public Thread newThread(Runnable r) {
       Thread thread = new Thread(r);
       thread.setName(prefix + " " + threadId.incrementAndGet());
@@ -383,11 +381,11 @@ public class NettyTransceiver implements ITransceiver {
    */
   class NettyChannelFactory extends AbstractChannelFactory {
 
-    @Override
+  
     protected synchronized Channel createChannel(String targetIP, int targetPort,
         int connectTimeout, final String key) throws Exception {
       bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
-        @Override
+        
         public ChannelPipeline getPipeline() throws Exception {
           ChannelPipeline p = Channels.pipeline();
 
