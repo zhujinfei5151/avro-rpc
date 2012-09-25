@@ -26,7 +26,6 @@ public class JsonSerializer implements ISerializer{
   }
 
   @SuppressWarnings("unchecked")
-  @Override
   public Object deserialize(ByteBuffer buffer, SerializerContext context) {
     if(!context.isRequest()){
       return JSON.parseObject(buffer.array(), context.getReturnclass());
@@ -38,7 +37,7 @@ public class JsonSerializer implements ISerializer{
           context.getParameterTypes()).toArray();
   }
 
-  @Override
+ 
   public ByteBuffer serialize(Object obj, SerializerContext context) {
     //Java全序列化支持方案
     return ByteBuffer.wrap(JSON.toJSONBytes(obj,SerializerFeature.WriteClassName));

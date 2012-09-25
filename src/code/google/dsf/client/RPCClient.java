@@ -45,7 +45,6 @@ public class RPCClient implements IClient {
    * 同步调用
    */
   @SuppressWarnings("rawtypes")
-  @Override
   public Object invokeSync(String beanName, String methodName, Class[] argTypes, Object[] args,
       Class returnclass, byte contentType) throws Exception {
     //同步回调锁
@@ -57,7 +56,6 @@ public class RPCClient implements IClient {
 
 
   @SuppressWarnings({"rawtypes", "unchecked"})
-  @Override
   public void invokeAsync(String beanName, String methodName, Class[] argTypes, Object[] args,
       Class returnclass, byte contentType, Callback callback) throws Exception {
     //发送请求流量控制
@@ -123,7 +121,7 @@ public class RPCClient implements IClient {
      * 传输对象收到数据后，会回调此方法
      */
     @SuppressWarnings("unchecked")
-    @Override
+   
     public void handleResult(List<ByteBuffer> result) {
       if (result == null || result.size() == 0) {
         this.callback.handleError(new RuntimeException("返回数据格式不正确"));
@@ -162,7 +160,6 @@ public class RPCClient implements IClient {
       }
     }
 
-    @Override
     public void handleError(Throwable error) {
       this.callback.handleError(error);
     }

@@ -28,7 +28,7 @@ public class JavaSerializer implements ISerializer {
     static JavaSerializer _instance = new JavaSerializer();
   }
 
-  @Override
+
   public Object deserialize(ByteBuffer buffer, SerializerContext context) {
     try {
       if(buffer == null || buffer.limit() == 0){
@@ -46,7 +46,6 @@ public class JavaSerializer implements ISerializer {
   }
   }
 
-  @Override
   public ByteBuffer serialize(Object obj, SerializerContext context) {
     try {
       ByteArrayOutputStream byteArrayOS = new ByteArrayOutputStream();

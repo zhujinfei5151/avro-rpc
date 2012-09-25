@@ -285,7 +285,6 @@ public class TestClient extends AbstractPerformaceTestClient {
   /**
    * 性能测试测试接口
    */
-  @Override
   public void doAction() throws Exception {
     //this.testList_avro_Async();
      this.testReturnDTO_avro_Async();

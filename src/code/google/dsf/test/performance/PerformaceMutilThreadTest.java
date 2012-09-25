@@ -144,7 +144,6 @@ public class PerformaceMutilThreadTest implements Callback {
 
   private class TPSmonitoring implements Runnable {
 
-    @Override
     public void run() {
       monitoringcount = monitoringcount + 1;
       double time = (System.currentTimeMillis() - startuptime) / 60000;
@@ -173,13 +172,12 @@ public class PerformaceMutilThreadTest implements Callback {
 
 
 
-  @Override
+
   public void handleResult(Object result) {
     requestcount.incrementAndGet();
 
   }
 
-  @Override
   public void handleError(Throwable error) {
     requestfailcount.incrementAndGet();
 
