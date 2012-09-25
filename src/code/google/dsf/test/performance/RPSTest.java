@@ -7,7 +7,11 @@ import code.google.dsf.test.TestClient;
 public class RPSTest {
   
   public static void main(String[] args) {
-    TestClient client = new TestClient("localhost",7001);
+    String ip = "localhost";
+    if(args != null && args.length > 0){
+      ip = args[0];
+    }
+    TestClient client = new TestClient(ip,7001);
     PerformaceMutilThreadTest.doRun(client,1, BigInteger.valueOf(50000000));
   }
 
