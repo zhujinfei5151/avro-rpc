@@ -58,7 +58,7 @@ public class NettyServer {
         p.addLast("frameEncoder", new NettyFrameEncoder());
         // 线程池处理
         p.addLast("executor", new NettyExecutionHandler(threadPool));
-        p.addLast("handler", new NettyServerHandler());
+        //p.addLast("handler", new NettyServerHandler());
         return p;
       }
     });

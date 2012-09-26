@@ -39,22 +39,16 @@ import code.google.dsf.protocol.NettyTransportCodec.NettyFrameEncoder;
 import code.google.dsf.protocol.ProtocolPack;
 
 /**
- * 基于Netty实现的客户端传输层
- * 应用层传入IP和端口及要传输的数据，传输层自动创建连接，将数据发给目标服务端。
- * 当服务端返回数据后，传输才会回调应用层的回调函数。
- * 单实例，多线程安全
- * 特点：
- * 1:连接复用。同一IP和端口只会创建一个连接。
- * 2:连接失效后。自动重新创建新连接。
- * 3:超时管理。当指定的时间内没有收到服务端回复时，会通知应用层超时
+ * 基于Netty实现的客户端传输层 应用层传入IP和端口及要传输的数据，传输层自动创建连接，将数据发给目标服务端。 当服务端返回数据后，传输才会回调应用层的回调函数。 单实例，多线程安全 特点：
+ * 1:连接复用。同一IP和端口只会创建一个连接。 2:连接失效后。自动重新创建新连接。 3:超时管理。当指定的时间内没有收到服务端回复时，会通知应用层超时
+ * 
  * @author taohuifei
- *
+ * 
  */
 public class NettyTransceiver implements ITransceiver {
 
   /**
-   * 是否为每实例分别创建一个连接 测试多连接的时候使用
-   * 一般情况下连接复用，同一个IP和端口只会创建一个连接
+   * 是否为每实例分别创建一个连接 测试多连接的时候使用 一般情况下连接复用，同一个IP和端口只会创建一个连接
    */
   public static boolean OneInstanceOneConnecton = false;
 
@@ -63,16 +57,16 @@ public class NettyTransceiver implements ITransceiver {
    */
   private final AbstractChannelFactory factory = new NettyChannelFactory();
 
-  //默认IP和端口  
+  // 默认IP和端口
   private String defaulttargetIP;
   private int defaulttargetPort;
 
-  //默认超时时间
+  // 默认超时时间
   public static int REQUEST_TIME_OUT = 60;
 
- /**
-  * socket参数选项
-  */
+  /**
+   * socket参数选项
+   */
   public static final long DEFAULT_CONNECTION_TIMEOUT_MILLIS = 60 * 1000L;
   public static final String NETTY_CONNECT_TIMEOUT_OPTION = "connectTimeoutMillis";
   public static final String NETTY_TCP_NODELAY_OPTION = "tcpNoDelay";
@@ -90,22 +84,22 @@ public class NettyTransceiver implements ITransceiver {
    */
   @SuppressWarnings("rawtypes")
   private final Map<Integer, Callback> requests = new ConcurrentHashMap<Integer, Callback>();
-  
-  
+
+
   /**
    * Netty自动的超时管器
    */
   private static final org.jboss.netty.util.Timer timer = new HashedWheelTimer();
 
   private final long connectTimeoutMillis;
-  
+
   private final ClientBootstrap bootstrap;
-  
+
   private final InetSocketAddress remoteAddr;
 
   private final ReadWriteLock stateLock = new ReentrantReadWriteLock();
 
-  private Channel channel; 
+  private Channel channel;
 
   public NettyTransceiver() throws IOException {
     this(null, DEFAULT_CONNECTION_TIMEOUT_MILLIS);
@@ -135,7 +129,7 @@ public class NettyTransceiver implements ITransceiver {
     this(addr, channelFactory, buildDefaultBootstrapOptions(connectTimeoutMillis));
   }
 
-  
+
   public NettyTransceiver(InetSocketAddress addr, ChannelFactory channelFactory,
       Map<String, Object> nettyClientBootstrapOptions) throws IOException {
     if (channelFactory == null) {
@@ -146,14 +140,14 @@ public class NettyTransceiver implements ITransceiver {
       this.defaulttargetIP = addr.getHostName();
       this.defaulttargetPort = addr.getPort();
     }
-    
+
     this.connectTimeoutMillis =
         (Long) nettyClientBootstrapOptions.get(NETTY_CONNECT_TIMEOUT_OPTION);
 
     bootstrap = new ClientBootstrap(channelFactory);
     if (OneInstanceOneConnecton) {
       bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
-       
+
         public ChannelPipeline getPipeline() throws Exception {
           ChannelPipeline p = Channels.pipeline();
 
@@ -232,10 +226,11 @@ public class NettyTransceiver implements ITransceiver {
   }
 
 
-  public void transceive(String ip,int port,ProtocolPack protocolPack, Callback<List<ByteBuffer>> callback) throws IOException {
-      addRequstHandleMap(callback, protocolPack.getSerial());
-      writeDataPack(ip, port, protocolPack);
-   
+  public void transceive(String ip, int port, ProtocolPack protocolPack,
+      Callback<List<ByteBuffer>> callback) throws IOException {
+    addRequstHandleMap(callback, protocolPack.getSerial());
+    writeDataPack(ip, port, protocolPack);
+
   }
 
   private void writeDataPack(String ip, int port, final ProtocolPack dataPack) throws IOException {
@@ -329,18 +324,28 @@ public class NettyTransceiver implements ITransceiver {
       super.channelOpen(ctx, e);
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
     public void messageReceived(ChannelHandlerContext ctx, final MessageEvent e) {
-      ProtocolPack dataPack = (ProtocolPack) e.getMessage();
-      @SuppressWarnings("rawtypes")
-      Callback callback = getRequestHandler(dataPack);
-      if (callback == null) {
-        return;
-      }
-      try {
-        callback.handleResult(dataPack.getDatas());
-      } finally {
+      if (e.getMessage() instanceof List) {
+        for (ProtocolPack pack : (List<ProtocolPack>) e.getMessage()) {
+          Callback callback = getRequestHandler(pack);
+          if (callback == null) {
+            return;
+          }
+          try {
+            callback.handleResult(pack.getDatas());
+          } finally {}
+        }
+      } else {
+        ProtocolPack dataPack = (ProtocolPack) e.getMessage();
+        Callback callback = getRequestHandler(dataPack);
+        if (callback == null) {
+          return;
+        }
+        try {
+          callback.handleResult(dataPack.getDatas());
+        } finally {}
       }
     }
 
@@ -350,8 +355,7 @@ public class NettyTransceiver implements ITransceiver {
     }
 
     public void channelClosed(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
-      if (key != null) 
-        factory.removeClient(key);
+      if (key != null) factory.removeClient(key);
     }
 
   }
@@ -365,7 +369,7 @@ public class NettyTransceiver implements ITransceiver {
       this.prefix = prefix;
     }
 
-    
+
     public Thread newThread(Runnable r) {
       Thread thread = new Thread(r);
       thread.setName(prefix + " " + threadId.incrementAndGet());
@@ -374,18 +378,18 @@ public class NettyTransceiver implements ITransceiver {
   }
 
   /**
-   * Netty 通道创建工厂
-   * 所有通道事件驱动共用一个反应堆
+   * Netty 通道创建工厂 所有通道事件驱动共用一个反应堆
+   * 
    * @author taohuifei
-   *
+   * 
    */
   class NettyChannelFactory extends AbstractChannelFactory {
 
-  
+
     protected synchronized Channel createChannel(String targetIP, int targetPort,
         int connectTimeout, final String key) throws Exception {
       bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
-        
+
         public ChannelPipeline getPipeline() throws Exception {
           ChannelPipeline p = Channels.pipeline();
 
