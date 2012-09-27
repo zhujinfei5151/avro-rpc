@@ -287,9 +287,9 @@ public class TestClient extends AbstractPerformaceTestClient {
    */
   public void doAction() throws Exception {
     // this.testList_avro_Async();
-    this.testReturnDTO_avro_Async();
+    //this.testReturnDTO_avro_Async();
     // this.testLis_Async_Other(SerializerFactory.SERIALIZER_JSON);
-    // this.testReturnDTO_Async_Other(SerializerFactory.SERIALIZER_JAVA);
+     this.testReturnDTO_Async_Other(SerializerFactory.SERIALIZER_HESSIAN);
   }
 
 }
