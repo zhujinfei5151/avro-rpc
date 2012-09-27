@@ -9,6 +9,7 @@ import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.ChannelFutureListener;
 import org.jboss.netty.channel.ChannelHandlerContext;
+import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
 
@@ -36,6 +37,11 @@ public class NettyExecutionHandler extends SimpleChannelUpstreamHandler {
 
   public Executor getExecutor() {
     return executor;
+  }
+  
+  @Override
+  public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
+    e.getChannel().close();
   }
 
   @Override
