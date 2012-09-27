@@ -7,7 +7,7 @@ import code.google.dsf.test.TestClient;
 public class RPSTest {
   
   public static void main(String[] args) {
-    String ip = "192.168.1.232";
+    String ip = "127.0.0.1";
     if(args != null && args.length > 0){
       ip = args[0];
     }
