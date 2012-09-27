@@ -277,8 +277,8 @@ public class NettyTransceiver implements ITransceiver {
   }
 
   private void addRequstHandleMap(@SuppressWarnings("rawtypes") Callback callback, int serial) {
-    requests.put(serial, callback);
-    timer.newTimeout(new ReadTimeoutTask(serial), REQUEST_TIME_OUT, TimeUnit.SECONDS);
+    Timeout timeout  = timer.newTimeout(new ReadTimeoutTask(serial), REQUEST_TIME_OUT, TimeUnit.SECONDS);
+    requests.put(serial, new CallbackTimeoutDecorate(callback,timeout));
   }
 
   @SuppressWarnings("rawtypes")
@@ -287,6 +287,29 @@ public class NettyTransceiver implements ITransceiver {
     return callback;
   }
 
+  
+  private final class CallbackTimeoutDecorate implements Callback {
+    
+    private Timeout timeout;
+    
+    private Callback callback;
+    
+    private CallbackTimeoutDecorate(Callback callback,Timeout timeout) {
+      this.callback = callback;
+      this.timeout = timeout;
+    }
+
+    public void handleError(Throwable arg0) {
+      this.timeout.cancel();
+      this.callback.handleError(arg0);
+    }
+
+    public void handleResult(Object arg0) {
+      this.timeout.cancel();
+      this.callback.handleResult(arg0);
+    }
+    
+  }
 
   private final class ReadTimeoutTask implements TimerTask {
 
