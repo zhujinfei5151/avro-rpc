@@ -7,8 +7,8 @@
 	<classpathentry kind="lib" path="lib/jackson-mapper-asl-1.8.1.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.16.jar"/>
 	<classpathentry kind="lib" path="lib/netty-3.2.7.Final.jar" sourcepath="/netty"/>
-	<classpathentry kind="lib" path="lib/avro-1.7.1.jar"/>
-	<classpathentry kind="lib" path="lib/avro-ipc-1.7.1.jar"/>
 	<classpathentry kind="lib" path="lib/hessian-4.0.7.jar"/>
+	<classpathentry kind="lib" path="lib/avro-1.7.2.jar"/>
+	<classpathentry kind="lib" path="lib/avro-ipc-1.7.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
