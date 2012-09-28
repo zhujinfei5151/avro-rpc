@@ -15,10 +15,10 @@ import code.google.dsf.serialize.SerializerContext;
 import code.google.dsf.serialize.SerializerFactory;
 
 public class RPCProtocolHandler implements IRPCProtocolHandler {
-  
+
   static final ByteBuffer RESPOND_TRUE = ByteBuffer.allocate(1);
   static final ByteBuffer RESPOND_FALSE = ByteBuffer.allocate(1);
-  
+
   static {
     RESPOND_TRUE.put(TRUE);
     RESPOND_TRUE.flip();
@@ -62,24 +62,23 @@ public class RPCProtocolHandler implements IRPCProtocolHandler {
       context.setParameterTypes(method.getParameterTypes());
       context.setRpcMetaDTO(rcpMeta);
       Object args = null;
-      if( dataPack.getDatas().size() > 1){
+      if (dataPack.getDatas().size() > 1) {
         args =
-          SerializerFactory.getSerializer(dataPack.getContentType()).deserialize(
-              dataPack.getDatas().get(1), context);
+            SerializerFactory.getSerializer(dataPack.getContentType()).deserialize(
+                dataPack.getDatas().get(1), context);
       }
-      
+
       Object instance = processors.get(rcpMeta.getBeanName());
       // AVRO paramers
-      if(args instanceof GenericRecord){
+      if (args instanceof GenericRecord) {
         Object[] paramers = new Object[method.getParameterTypes().length];
-        for(int i = 0; i < paramers.length; i++){
+        for (int i = 0; i < paramers.length; i++) {
           paramers[i] = ((GenericRecord) args).get(i);
         }
         Object result = method.invoke(instance, paramers);
         return putRespond(result, dataPack.getContentType(), rcpMeta);
-      }
-      else{
-        Object result = method.invoke(instance, (Object[])args);
+      } else {
+        Object result = method.invoke(instance, (Object[]) args);
         return putRespond(result, dataPack.getContentType(), rcpMeta);
       }
     } catch (Exception e) {
@@ -115,7 +114,7 @@ public class RPCProtocolHandler implements IRPCProtocolHandler {
       buffers.add(data);
       return buffers;
     }
-    
+
   }
 
 }

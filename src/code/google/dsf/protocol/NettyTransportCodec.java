@@ -37,8 +37,8 @@ public class NettyTransportCodec {
     @Override
     protected Object encode(ChannelHandlerContext ctx, Channel channel, Object msg)
         throws Exception {
-
-      ProtocolPack dataPack = (ProtocolPack) msg;
+      return ChannelBuffers.wrappedBuffer(((ProtocolPack) msg).encode());   
+      /*ProtocolPack dataPack = (ProtocolPack) msg;
       List<ByteBuffer> origs = dataPack.getDatas();
       List<ByteBuffer> bbs = new ArrayList<ByteBuffer>(origs.size() * 2 + 1);
       // 消息头
@@ -50,7 +50,7 @@ public class NettyTransportCodec {
         bbs.add(b);
       }
       ChannelBuffer buffer = ChannelBuffers.wrappedBuffer(bbs.toArray(new ByteBuffer[bbs.size()]));
-      return buffer;
+      return buffer;*/
     }
 
     private ByteBuffer getPackHeader(ProtocolPack dataPack) {
@@ -184,7 +184,12 @@ public class NettyTransportCodec {
             }
             results.add(frame);
         }
-        if(results.size() > 0)
+        int size = results.size();
+        if(size == 0)
+          return;
+        else if (size == 1)
+          unfoldAndFireMessageReceived(context, remoteAddress, results.get(0));
+        else  
             unfoldAndFireMessageReceived(context, remoteAddress, results);
     }
 

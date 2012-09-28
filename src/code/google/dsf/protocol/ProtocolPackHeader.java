@@ -2,20 +2,22 @@ package code.google.dsf.protocol;
 
 public class ProtocolPackHeader {
 
+  public static final int HEADLENGTH = 12;
+
   public final static byte DSF_MAGIC_NUMBER = (byte) 0xE1;
 
-  private int serial;
- 
-  private byte messageType;
-  
-  private byte protocolType;
-  
-  private byte contentType;
+  protected int serial;
+
+  protected byte messageType;
+
+  protected byte protocolType;
+
+  protected byte contentType;
 
   public int getSerial() {
     return serial;
   }
-  
+
   public static int getHeadLength() {
     return 12;
   }

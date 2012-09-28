@@ -45,4 +45,37 @@ public class ProtocolPack extends ProtocolPackHeader {
     this.datas = datas;
   }
   
+  public ByteBuffer encode() {
+    int len = ProtocolPackHeader.HEADLENGTH;
+    
+    int idatasize = this.datas.size();
+    for(int i = 0; i < idatasize; i++){
+        len = len + 4 + this.datas.get(i).limit();
+    }
+    ByteBuffer buffer = ByteBuffer.allocate(len);
+    // 1. 一个字节的Magic Number
+    buffer.put(ProtocolPack.DSF_MAGIC_NUMBER);
+    // 2. 4个字节 Integer类型消息序号
+    buffer.putInt(this.serial);
+    // 3. 一个字节的消息类型
+    buffer.put(this.messageType);
+    // 4. 一个字节的协议类型
+    buffer.put(this.protocolType);
+    // 5. 一个字节的编码类型
+    buffer.put(this.contentType);
+    // 6 4个字节的消息块数目
+    buffer.putInt(idatasize);
+    
+    // datas
+    for(int i = 0; i < idatasize; i++){
+         ByteBuffer data = this.datas.get(i);
+         int ilen = data.limit();
+         buffer.putInt(ilen);
+         System.arraycopy(data.array(), 0, buffer.array(), buffer.position(), ilen);
+         buffer.position( buffer.position()+ilen);
+    }
+    buffer.flip();
+    return buffer;
+    
+}
 }
