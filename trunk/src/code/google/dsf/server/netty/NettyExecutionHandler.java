@@ -41,6 +41,7 @@ public class NettyExecutionHandler extends SimpleChannelUpstreamHandler {
   
   @Override
   public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent e) {
+    e.getCause().printStackTrace();
     e.getChannel().close();
   }
 
@@ -127,6 +128,7 @@ public class NettyExecutionHandler extends SimpleChannelUpstreamHandler {
       wf.addListener(new ChannelFutureListener() {
         public void operationComplete(ChannelFuture future) throws Exception {
           if (!future.isSuccess()) {
+            future.getCause().printStackTrace();
             // "server write response
           }
         }

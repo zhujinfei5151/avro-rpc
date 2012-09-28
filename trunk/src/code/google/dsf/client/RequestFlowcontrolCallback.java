@@ -15,7 +15,7 @@ import org.apache.avro.ipc.Callback;
 @SuppressWarnings("rawtypes")
 public class RequestFlowcontrolCallback implements Callback{
 	static final int DEFAULT_IO_THREADS = Runtime.getRuntime().availableProcessors()+ 1;
-	private static final int MAX_AVAILABLE = 1000;
+	private static final int MAX_AVAILABLE = 500;
     private static final Semaphore available = new Semaphore(MAX_AVAILABLE, true);
 	private static ExecutorService executorService = Executors.newFixedThreadPool(DEFAULT_IO_THREADS);
 	
