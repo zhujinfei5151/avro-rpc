@@ -31,3 +31,7 @@ message PbDTO {
   optional int32 homecountry =  9;
   optional int32 visitcountry = 10;
 }
+
+message PbList {
+  repeated PbDTO dto = 1;
+}
