@@ -7,6 +7,7 @@ import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.util.Utf8;
 
 import code.google.dsf.test.protobuf.Test.PbDTO;
+import code.google.dsf.test.protobuf.Test.PbList;
 
 /**
  * 测试服务对象
@@ -31,12 +32,21 @@ public class TestServerImp {
   }
   
   /**
-   * Avro DTO 测试
+   * Protocol Buffer DTO 测试
    * @param dto
    * @return
    */
   public PbDTO testReturnDTO_protobuf(PbDTO dto) {
     return dto;
+  }
+  
+  /**
+   * Protocol Buffer DTO 测试
+   * @param dto
+   * @return
+   */
+  public PbList testReturnList_protobuf(PbList list) {
+    return list;
   }
   
   

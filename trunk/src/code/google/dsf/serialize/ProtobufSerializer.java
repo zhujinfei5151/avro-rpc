@@ -67,7 +67,11 @@ public class ProtobufSerializer implements ISerializer {
         throw new RuntimeException(e.getMessage());
       }
     }
-    return result;
+    if(context.isRequest())
+      return result;
+    else {
+      return result[0];
+    }
   }
 
   public ByteBuffer serialize(Object obj, SerializerContext context) {

@@ -1052,11 +1052,579 @@ public final class Test {
     // @@protoc_insertion_point(class_scope:code.google.dsf.test.protobuf.PbDTO)
   }
   
+  public interface PbListOrBuilder
+      extends com.google.protobuf.MessageOrBuilder {
+    
+    // repeated .code.google.dsf.test.protobuf.PbDTO dto = 1;
+    java.util.List<code.google.dsf.test.protobuf.Test.PbDTO> 
+        getDtoList();
+    code.google.dsf.test.protobuf.Test.PbDTO getDto(int index);
+    int getDtoCount();
+    java.util.List<? extends code.google.dsf.test.protobuf.Test.PbDTOOrBuilder> 
+        getDtoOrBuilderList();
+    code.google.dsf.test.protobuf.Test.PbDTOOrBuilder getDtoOrBuilder(
+        int index);
+  }
+  public static final class PbList extends
+      com.google.protobuf.GeneratedMessage
+      implements PbListOrBuilder {
+    // Use PbList.newBuilder() to construct.
+    private PbList(Builder builder) {
+      super(builder);
+    }
+    private PbList(boolean noInit) {}
+    
+    private static final PbList defaultInstance;
+    public static PbList getDefaultInstance() {
+      return defaultInstance;
+    }
+    
+    public PbList getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+    
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return code.google.dsf.test.protobuf.Test.internal_static_code_google_dsf_test_protobuf_PbList_descriptor;
+    }
+    
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return code.google.dsf.test.protobuf.Test.internal_static_code_google_dsf_test_protobuf_PbList_fieldAccessorTable;
+    }
+    
+    // repeated .code.google.dsf.test.protobuf.PbDTO dto = 1;
+    public static final int DTO_FIELD_NUMBER = 1;
+    private java.util.List<code.google.dsf.test.protobuf.Test.PbDTO> dto_;
+    public java.util.List<code.google.dsf.test.protobuf.Test.PbDTO> getDtoList() {
+      return dto_;
+    }
+    public java.util.List<? extends code.google.dsf.test.protobuf.Test.PbDTOOrBuilder> 
+        getDtoOrBuilderList() {
+      return dto_;
+    }
+    public int getDtoCount() {
+      return dto_.size();
+    }
+    public code.google.dsf.test.protobuf.Test.PbDTO getDto(int index) {
+      return dto_.get(index);
+    }
+    public code.google.dsf.test.protobuf.Test.PbDTOOrBuilder getDtoOrBuilder(
+        int index) {
+      return dto_.get(index);
+    }
+    
+    private void initFields() {
+      dto_ = java.util.Collections.emptyList();
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized != -1) return isInitialized == 1;
+      
+      for (int i = 0; i < getDtoCount(); i++) {
+        if (!getDto(i).isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+    
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      for (int i = 0; i < dto_.size(); i++) {
+        output.writeMessage(1, dto_.get(i));
+      }
+      getUnknownFields().writeTo(output);
+    }
+    
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+    
+      size = 0;
+      for (int i = 0; i < dto_.size(); i++) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(1, dto_.get(i));
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+    
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+    
+    public static code.google.dsf.test.protobuf.Test.PbList parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static code.google.dsf.test.protobuf.Test.PbList parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static code.google.dsf.test.protobuf.Test.PbList parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data).buildParsed();
+    }
+    public static code.google.dsf.test.protobuf.Test.PbList parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return newBuilder().mergeFrom(data, extensionRegistry)
+               .buildParsed();
+    }
+    public static code.google.dsf.test.protobuf.Test.PbList parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static code.google.dsf.test.protobuf.Test.PbList parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    public static code.google.dsf.test.protobuf.Test.PbList parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static code.google.dsf.test.protobuf.Test.PbList parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      Builder builder = newBuilder();
+      if (builder.mergeDelimitedFrom(input, extensionRegistry)) {
+        return builder.buildParsed();
+      } else {
+        return null;
+      }
+    }
+    public static code.google.dsf.test.protobuf.Test.PbList parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input).buildParsed();
+    }
+    public static code.google.dsf.test.protobuf.Test.PbList parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return newBuilder().mergeFrom(input, extensionRegistry)
+               .buildParsed();
+    }
+    
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(code.google.dsf.test.protobuf.Test.PbList prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+    
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder>
+       implements code.google.dsf.test.protobuf.Test.PbListOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return code.google.dsf.test.protobuf.Test.internal_static_code_google_dsf_test_protobuf_PbList_descriptor;
+      }
+      
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return code.google.dsf.test.protobuf.Test.internal_static_code_google_dsf_test_protobuf_PbList_fieldAccessorTable;
+      }
+      
+      // Construct using code.google.dsf.test.protobuf.Test.PbList.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+      
+      private Builder(BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+          getDtoFieldBuilder();
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+      
+      public Builder clear() {
+        super.clear();
+        if (dtoBuilder_ == null) {
+          dto_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+        } else {
+          dtoBuilder_.clear();
+        }
+        return this;
+      }
+      
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+      
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return code.google.dsf.test.protobuf.Test.PbList.getDescriptor();
+      }
+      
+      public code.google.dsf.test.protobuf.Test.PbList getDefaultInstanceForType() {
+        return code.google.dsf.test.protobuf.Test.PbList.getDefaultInstance();
+      }
+      
+      public code.google.dsf.test.protobuf.Test.PbList build() {
+        code.google.dsf.test.protobuf.Test.PbList result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+      
+      private code.google.dsf.test.protobuf.Test.PbList buildParsed()
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        code.google.dsf.test.protobuf.Test.PbList result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(
+            result).asInvalidProtocolBufferException();
+        }
+        return result;
+      }
+      
+      public code.google.dsf.test.protobuf.Test.PbList buildPartial() {
+        code.google.dsf.test.protobuf.Test.PbList result = new code.google.dsf.test.protobuf.Test.PbList(this);
+        int from_bitField0_ = bitField0_;
+        if (dtoBuilder_ == null) {
+          if (((bitField0_ & 0x00000001) == 0x00000001)) {
+            dto_ = java.util.Collections.unmodifiableList(dto_);
+            bitField0_ = (bitField0_ & ~0x00000001);
+          }
+          result.dto_ = dto_;
+        } else {
+          result.dto_ = dtoBuilder_.build();
+        }
+        onBuilt();
+        return result;
+      }
+      
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof code.google.dsf.test.protobuf.Test.PbList) {
+          return mergeFrom((code.google.dsf.test.protobuf.Test.PbList)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+      
+      public Builder mergeFrom(code.google.dsf.test.protobuf.Test.PbList other) {
+        if (other == code.google.dsf.test.protobuf.Test.PbList.getDefaultInstance()) return this;
+        if (dtoBuilder_ == null) {
+          if (!other.dto_.isEmpty()) {
+            if (dto_.isEmpty()) {
+              dto_ = other.dto_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+            } else {
+              ensureDtoIsMutable();
+              dto_.addAll(other.dto_);
+            }
+            onChanged();
+          }
+        } else {
+          if (!other.dto_.isEmpty()) {
+            if (dtoBuilder_.isEmpty()) {
+              dtoBuilder_.dispose();
+              dtoBuilder_ = null;
+              dto_ = other.dto_;
+              bitField0_ = (bitField0_ & ~0x00000001);
+              dtoBuilder_ = 
+                com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders ?
+                   getDtoFieldBuilder() : null;
+            } else {
+              dtoBuilder_.addAllMessages(other.dto_);
+            }
+          }
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+      
+      public final boolean isInitialized() {
+        for (int i = 0; i < getDtoCount(); i++) {
+          if (!getDto(i).isInitialized()) {
+            
+            return false;
+          }
+        }
+        return true;
+      }
+      
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder(
+            this.getUnknownFields());
+        while (true) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              this.setUnknownFields(unknownFields.build());
+              onChanged();
+              return this;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                this.setUnknownFields(unknownFields.build());
+                onChanged();
+                return this;
+              }
+              break;
+            }
+            case 10: {
+              code.google.dsf.test.protobuf.Test.PbDTO.Builder subBuilder = code.google.dsf.test.protobuf.Test.PbDTO.newBuilder();
+              input.readMessage(subBuilder, extensionRegistry);
+              addDto(subBuilder.buildPartial());
+              break;
+            }
+          }
+        }
+      }
+      
+      private int bitField0_;
+      
+      // repeated .code.google.dsf.test.protobuf.PbDTO dto = 1;
+      private java.util.List<code.google.dsf.test.protobuf.Test.PbDTO> dto_ =
+        java.util.Collections.emptyList();
+      private void ensureDtoIsMutable() {
+        if (!((bitField0_ & 0x00000001) == 0x00000001)) {
+          dto_ = new java.util.ArrayList<code.google.dsf.test.protobuf.Test.PbDTO>(dto_);
+          bitField0_ |= 0x00000001;
+         }
+      }
+      
+      private com.google.protobuf.RepeatedFieldBuilder<
+          code.google.dsf.test.protobuf.Test.PbDTO, code.google.dsf.test.protobuf.Test.PbDTO.Builder, code.google.dsf.test.protobuf.Test.PbDTOOrBuilder> dtoBuilder_;
+      
+      public java.util.List<code.google.dsf.test.protobuf.Test.PbDTO> getDtoList() {
+        if (dtoBuilder_ == null) {
+          return java.util.Collections.unmodifiableList(dto_);
+        } else {
+          return dtoBuilder_.getMessageList();
+        }
+      }
+      public int getDtoCount() {
+        if (dtoBuilder_ == null) {
+          return dto_.size();
+        } else {
+          return dtoBuilder_.getCount();
+        }
+      }
+      public code.google.dsf.test.protobuf.Test.PbDTO getDto(int index) {
+        if (dtoBuilder_ == null) {
+          return dto_.get(index);
+        } else {
+          return dtoBuilder_.getMessage(index);
+        }
+      }
+      public Builder setDto(
+          int index, code.google.dsf.test.protobuf.Test.PbDTO value) {
+        if (dtoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDtoIsMutable();
+          dto_.set(index, value);
+          onChanged();
+        } else {
+          dtoBuilder_.setMessage(index, value);
+        }
+        return this;
+      }
+      public Builder setDto(
+          int index, code.google.dsf.test.protobuf.Test.PbDTO.Builder builderForValue) {
+        if (dtoBuilder_ == null) {
+          ensureDtoIsMutable();
+          dto_.set(index, builderForValue.build());
+          onChanged();
+        } else {
+          dtoBuilder_.setMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addDto(code.google.dsf.test.protobuf.Test.PbDTO value) {
+        if (dtoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDtoIsMutable();
+          dto_.add(value);
+          onChanged();
+        } else {
+          dtoBuilder_.addMessage(value);
+        }
+        return this;
+      }
+      public Builder addDto(
+          int index, code.google.dsf.test.protobuf.Test.PbDTO value) {
+        if (dtoBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          ensureDtoIsMutable();
+          dto_.add(index, value);
+          onChanged();
+        } else {
+          dtoBuilder_.addMessage(index, value);
+        }
+        return this;
+      }
+      public Builder addDto(
+          code.google.dsf.test.protobuf.Test.PbDTO.Builder builderForValue) {
+        if (dtoBuilder_ == null) {
+          ensureDtoIsMutable();
+          dto_.add(builderForValue.build());
+          onChanged();
+        } else {
+          dtoBuilder_.addMessage(builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addDto(
+          int index, code.google.dsf.test.protobuf.Test.PbDTO.Builder builderForValue) {
+        if (dtoBuilder_ == null) {
+          ensureDtoIsMutable();
+          dto_.add(index, builderForValue.build());
+          onChanged();
+        } else {
+          dtoBuilder_.addMessage(index, builderForValue.build());
+        }
+        return this;
+      }
+      public Builder addAllDto(
+          java.lang.Iterable<? extends code.google.dsf.test.protobuf.Test.PbDTO> values) {
+        if (dtoBuilder_ == null) {
+          ensureDtoIsMutable();
+          super.addAll(values, dto_);
+          onChanged();
+        } else {
+          dtoBuilder_.addAllMessages(values);
+        }
+        return this;
+      }
+      public Builder clearDto() {
+        if (dtoBuilder_ == null) {
+          dto_ = java.util.Collections.emptyList();
+          bitField0_ = (bitField0_ & ~0x00000001);
+          onChanged();
+        } else {
+          dtoBuilder_.clear();
+        }
+        return this;
+      }
+      public Builder removeDto(int index) {
+        if (dtoBuilder_ == null) {
+          ensureDtoIsMutable();
+          dto_.remove(index);
+          onChanged();
+        } else {
+          dtoBuilder_.remove(index);
+        }
+        return this;
+      }
+      public code.google.dsf.test.protobuf.Test.PbDTO.Builder getDtoBuilder(
+          int index) {
+        return getDtoFieldBuilder().getBuilder(index);
+      }
+      public code.google.dsf.test.protobuf.Test.PbDTOOrBuilder getDtoOrBuilder(
+          int index) {
+        if (dtoBuilder_ == null) {
+          return dto_.get(index);  } else {
+          return dtoBuilder_.getMessageOrBuilder(index);
+        }
+      }
+      public java.util.List<? extends code.google.dsf.test.protobuf.Test.PbDTOOrBuilder> 
+           getDtoOrBuilderList() {
+        if (dtoBuilder_ != null) {
+          return dtoBuilder_.getMessageOrBuilderList();
+        } else {
+          return java.util.Collections.unmodifiableList(dto_);
+        }
+      }
+      public code.google.dsf.test.protobuf.Test.PbDTO.Builder addDtoBuilder() {
+        return getDtoFieldBuilder().addBuilder(
+            code.google.dsf.test.protobuf.Test.PbDTO.getDefaultInstance());
+      }
+      public code.google.dsf.test.protobuf.Test.PbDTO.Builder addDtoBuilder(
+          int index) {
+        return getDtoFieldBuilder().addBuilder(
+            index, code.google.dsf.test.protobuf.Test.PbDTO.getDefaultInstance());
+      }
+      public java.util.List<code.google.dsf.test.protobuf.Test.PbDTO.Builder> 
+           getDtoBuilderList() {
+        return getDtoFieldBuilder().getBuilderList();
+      }
+      private com.google.protobuf.RepeatedFieldBuilder<
+          code.google.dsf.test.protobuf.Test.PbDTO, code.google.dsf.test.protobuf.Test.PbDTO.Builder, code.google.dsf.test.protobuf.Test.PbDTOOrBuilder> 
+          getDtoFieldBuilder() {
+        if (dtoBuilder_ == null) {
+          dtoBuilder_ = new com.google.protobuf.RepeatedFieldBuilder<
+              code.google.dsf.test.protobuf.Test.PbDTO, code.google.dsf.test.protobuf.Test.PbDTO.Builder, code.google.dsf.test.protobuf.Test.PbDTOOrBuilder>(
+                  dto_,
+                  ((bitField0_ & 0x00000001) == 0x00000001),
+                  getParentForChildren(),
+                  isClean());
+          dto_ = null;
+        }
+        return dtoBuilder_;
+      }
+      
+      // @@protoc_insertion_point(builder_scope:code.google.dsf.test.protobuf.PbList)
+    }
+    
+    static {
+      defaultInstance = new PbList(true);
+      defaultInstance.initFields();
+    }
+    
+    // @@protoc_insertion_point(class_scope:code.google.dsf.test.protobuf.PbList)
+  }
+  
   private static com.google.protobuf.Descriptors.Descriptor
     internal_static_code_google_dsf_test_protobuf_PbDTO_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_code_google_dsf_test_protobuf_PbDTO_fieldAccessorTable;
+  private static com.google.protobuf.Descriptors.Descriptor
+    internal_static_code_google_dsf_test_protobuf_PbList_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_code_google_dsf_test_protobuf_PbList_fieldAccessorTable;
   
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -1071,7 +1639,9 @@ public final class Test {
       " \001(\t\022\016\n\006userid\030\003 \001(\005\022\014\n\004imei\030\004 \001(\t\022\013\n\003si" +
       "d\030\005 \001(\t\022\020\n\010flowSize\030\006 \001(\001\022\021\n\tbeginTime\030\007" +
       " \001(\t\022\017\n\007endTime\030\010 \001(\t\022\023\n\013homecountry\030\t \001" +
-      "(\005\022\024\n\014visitcountry\030\n \001(\005"
+      "(\005\022\024\n\014visitcountry\030\n \001(\005\";\n\006PbList\0221\n\003dt" +
+      "o\030\001 \003(\0132$.code.google.dsf.test.protobuf." +
+      "PbDTO"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
       new com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner() {
@@ -1086,6 +1656,14 @@ public final class Test {
               new java.lang.String[] { "Itemid", "Logid", "Userid", "Imei", "Sid", "FlowSize", "BeginTime", "EndTime", "Homecountry", "Visitcountry", },
               code.google.dsf.test.protobuf.Test.PbDTO.class,
               code.google.dsf.test.protobuf.Test.PbDTO.Builder.class);
+          internal_static_code_google_dsf_test_protobuf_PbList_descriptor =
+            getDescriptor().getMessageTypes().get(1);
+          internal_static_code_google_dsf_test_protobuf_PbList_fieldAccessorTable = new
+            com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+              internal_static_code_google_dsf_test_protobuf_PbList_descriptor,
+              new java.lang.String[] { "Dto", },
+              code.google.dsf.test.protobuf.Test.PbList.class,
+              code.google.dsf.test.protobuf.Test.PbList.Builder.class);
           return null;
         }
       };
