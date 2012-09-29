@@ -23,6 +23,9 @@ public abstract class SerializerFactory {
 
   // HESSIAN2序列化
   public static final byte SERIALIZER_HESSIAN = (byte) 0x03;
+  
+  // protobuf序列化
+  public static final byte SERIALIZER_PROTOBUF = (byte) 0x04;
 
   private static Map<Byte, ISerializer> serializerHandlerMap = new HashMap<Byte, ISerializer>();
 
@@ -31,6 +34,7 @@ public abstract class SerializerFactory {
     SerializerFactory.registerSerializer(SERIALIZER_JSON, JsonSerializer.getInstance());
     SerializerFactory.registerSerializer(SERIALIZER_HESSIAN, HessianSerializer.getInstance());
     SerializerFactory.registerSerializer(SERIALIZER_JAVA, JavaSerializer.getInstance());
+    SerializerFactory.registerSerializer(SERIALIZER_PROTOBUF, ProtobufSerializer.getInstance());
   }
 
   public static void registerSerializer(byte type, ISerializer serializer) {

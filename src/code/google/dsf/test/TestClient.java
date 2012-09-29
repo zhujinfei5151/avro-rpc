@@ -15,6 +15,7 @@ import code.google.dsf.client.IClient;
 import code.google.dsf.client.RPCClient;
 import code.google.dsf.serialize.AvroSerializer;
 import code.google.dsf.serialize.SerializerFactory;
+import code.google.dsf.test.protobuf.Test.PbDTO;
 
 @SuppressWarnings("static-access")
 public class TestClient extends AbstractPerformaceTestClient {
@@ -22,6 +23,7 @@ public class TestClient extends AbstractPerformaceTestClient {
   private IClient client;
   static GenericRecord avroparams = null;
   static TestDTO testDTO;
+  static PbDTO pbDTO;
   static String methodName = "testReturnDTO_avro";
   static int listsize = 1;
   static GenericRecord avrolist;
@@ -29,6 +31,7 @@ public class TestClient extends AbstractPerformaceTestClient {
   static Protocol protocol;
 
   static {
+ 
     // 为AVRO序列化注册协议文件
     AvroSerializer avroSerializer =
         (AvroSerializer) SerializerFactory.getSerializer(SerializerFactory.SERIALIZER_AVRO);
@@ -36,6 +39,8 @@ public class TestClient extends AbstractPerformaceTestClient {
       protocol =
           avroSerializer.registerAvroProtocol(TestServerImp.BEANAME,
               "code/google/dsf/test/test.avpr");
+
+
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -58,6 +63,14 @@ public class TestClient extends AbstractPerformaceTestClient {
     testDTO.setEndTime(new Date());
     testDTO.setHomecountry(1);
     testDTO.setVisitcountry(1);
+
+    pbDTO =
+        PbDTO.newBuilder().setItemid(testDTO.getItemid()).setLogid(testDTO.getLogid())
+            .setImei(testDTO.getImei()).setUserid(testDTO.getUserid()).setSid(testDTO.getSid())
+            .setFlowSize(testDTO.getFlowSize()).setBeginTime("2012-01-01 12:00:00")
+            .setEndTime("2012-11-01 12:00:00").build();
+
+
 
     Message message = protocol.getMessages().get(methodName);
     avroparams = new GenericData.Record(message.getRequest());
@@ -124,10 +137,12 @@ public class TestClient extends AbstractPerformaceTestClient {
       Object obj =
           this.client.invokeSync(TestServerImp.BEANAME, methodName, null,
               new Object[] {avroparams}, null, SerializerFactory.SERIALIZER_AVRO);
+      System.out.println(obj);
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
+
 
   @SuppressWarnings("unused")
   private void testReturnDTO_avro_Async() {
@@ -168,7 +183,15 @@ public class TestClient extends AbstractPerformaceTestClient {
   @SuppressWarnings("unused")
   private void testReturnDTO_Async_Other(byte contentType) {
     try {
-      this.client.invokeAsync(TestServerImp.BEANAME, "testReturnDTO", null, new Object[] {testDTO},
+      String methodname = "testReturnDTO";
+      Object arg = null;
+      if (contentType == SerializerFactory.SERIALIZER_PROTOBUF){
+        arg = pbDTO;
+        methodname = "testReturnDTO_protobuf";
+      }
+      else
+        arg = testDTO;
+      this.client.invokeAsync(TestServerImp.BEANAME, methodname, null, new Object[] {arg},
           TestDTO.class, contentType, this);
     } catch (Exception e) {
       if (this.callBack != null) {
@@ -180,9 +203,18 @@ public class TestClient extends AbstractPerformaceTestClient {
   @SuppressWarnings("unused")
   private void testReturnDTO_Other(byte contentType) {
     try {
+      String methodname = "testReturnDTO";
+      Object arg = null;
+      if (contentType == SerializerFactory.SERIALIZER_PROTOBUF){
+        arg = pbDTO;
+        methodname = "testReturnDTO_protobuf";
+      }
+      else
+        arg = testDTO;
+
       Object obj =
-          this.client.invokeSync(TestServerImp.BEANAME, "testReturnDTO", null,
-              new Object[] {testDTO}, testDTO.getClass(), contentType);
+          this.client.invokeSync(TestServerImp.BEANAME, methodname, null, new Object[] {arg},
+              testDTO.getClass(), contentType);
       System.out.println(obj);
     } catch (Exception e) {
       e.printStackTrace();
@@ -259,9 +291,10 @@ public class TestClient extends AbstractPerformaceTestClient {
 
   public static void main(String[] args) throws Exception {
     TestClient test = new TestClient("localhost", 7001);
+    test.testReturnDTO_Other(SerializerFactory.SERIALIZER_PROTOBUF);
 
-    test.testReturnDTO_avro();
-    test.testList_avro();
+    // test.testReturnDTO_avro();
+   /* test.testList_avro();
     test.testList_avro_Async();
 
     test.testLis_Other(SerializerFactory.SERIALIZER_HESSIAN);
@@ -277,7 +310,7 @@ public class TestClient extends AbstractPerformaceTestClient {
     test.testNull_Other(SerializerFactory.SERIALIZER_JSON);
 
     test.testSimpletypes_avro();
-
+*/
 
   }
 
@@ -287,9 +320,9 @@ public class TestClient extends AbstractPerformaceTestClient {
    */
   public void doAction() throws Exception {
     // this.testList_avro_Async();
-    this.testReturnDTO_avro_Async();
-    // this.testLis_Async_Other(SerializerFactory.SERIALIZER_JSON);
-     //this.testReturnDTO_Async_Other(SerializerFactory.SERIALIZER_HESSIAN);
+    //this.testReturnDTO_avro_Async();
+     //this.testLis_Async_Other(SerializerFactory.SERIALIZER_HESSIAN);
+    this.testReturnDTO_Async_Other(SerializerFactory.SERIALIZER_PROTOBUF);
   }
 
 }
