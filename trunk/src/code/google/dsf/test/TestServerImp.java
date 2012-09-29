@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.util.Utf8;
 
+import code.google.dsf.test.protobuf.Test.PbDTO;
+
 /**
  * 测试服务对象
  * @author taohuifei
@@ -27,6 +29,16 @@ public class TestServerImp {
   public GenericRecord testReturnDTO_avro(GenericRecord dto) {
     return dto;
   }
+  
+  /**
+   * Avro DTO 测试
+   * @param dto
+   * @return
+   */
+  public PbDTO testReturnDTO_protobuf(PbDTO dto) {
+    return dto;
+  }
+  
   
   /**
    * List 测试

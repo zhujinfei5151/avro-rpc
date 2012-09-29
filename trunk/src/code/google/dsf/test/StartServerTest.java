@@ -3,7 +3,6 @@ package code.google.dsf.test;
 import java.util.concurrent.Executors;
 
 import code.google.dsf.serialize.AvroSerializer;
-import code.google.dsf.serialize.SerializerFactory;
 import code.google.dsf.server.ProtocolHandlerFactory;
 import code.google.dsf.server.netty.NettyServer;
 
