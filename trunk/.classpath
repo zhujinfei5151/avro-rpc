@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="lib/hessian-4.0.7.jar"/>
 	<classpathentry kind="lib" path="lib/avro-1.7.2.jar"/>
 	<classpathentry kind="lib" path="lib/avro-ipc-1.7.2.jar"/>
+	<classpathentry kind="lib" path="lib/protobuf-java-2.4.1.jar" sourcepath="lib/protobuf-java-2.4.1-sources.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
