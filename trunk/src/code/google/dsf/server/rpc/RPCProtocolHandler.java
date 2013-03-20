@@ -102,6 +102,8 @@ public class RPCProtocolHandler implements IRPCProtocolHandler {
     if (result instanceof Throwable) {
       buffers.add(RESPOND_FALSE);
       String errormsg = ((Throwable) result).getMessage();
+      if(errormsg == null)
+        return buffers;
       ByteBuffer data = ByteBuffer.wrap(SerializerFactory.stringToBytes(errormsg));
       buffers.add(data);
       return buffers;

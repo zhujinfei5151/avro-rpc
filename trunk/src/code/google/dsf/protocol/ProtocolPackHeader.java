@@ -1,5 +1,7 @@
 package code.google.dsf.protocol;
 
+import code.google.dsf.serialize.SerializerFactory;
+
 public class ProtocolPackHeader {
 
   public static final int HEADLENGTH = 12;
@@ -12,7 +14,7 @@ public class ProtocolPackHeader {
 
   protected byte protocolType;
 
-  protected byte contentType;
+  protected byte contentType = SerializerFactory.SERIALIZER_JSON;
 
   public int getSerial() {
     return serial;

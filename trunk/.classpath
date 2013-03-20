@@ -11,5 +11,27 @@
 	<classpathentry kind="lib" path="lib/avro-1.7.2.jar"/>
 	<classpathentry kind="lib" path="lib/avro-ipc-1.7.2.jar"/>
 	<classpathentry kind="lib" path="lib/protobuf-java-2.4.1.jar" sourcepath="lib/protobuf-java-2.4.1-sources.jar"/>
+	<classpathentry kind="lib" path="lib/servlet-api-2.5.jar"/>
+	<classpathentry kind="lib" path="lib/jett7/jetty-ajp-7.4.2.v20110526.jar"/>
+	<classpathentry kind="lib" path="lib/jett7/jetty-annotations-7.4.2.v20110526.jar"/>
+	<classpathentry kind="lib" path="lib/jett7/jetty-client-7.4.2.v20110526.jar"/>
+	<classpathentry kind="lib" path="lib/jett7/jetty-continuation-7.4.2.v20110526.jar"/>
+	<classpathentry kind="lib" path="lib/jett7/jetty-deploy-7.4.2.v20110526.jar"/>
+	<classpathentry kind="lib" path="lib/jett7/jetty-http-7.4.2.v20110526.jar"/>
+	<classpathentry kind="lib" path="lib/jett7/jetty-io-7.4.2.v20110526.jar"/>
+	<classpathentry kind="lib" path="lib/jett7/jetty-jmx-7.4.2.v20110526.jar"/>
+	<classpathentry kind="lib" path="lib/jett7/jetty-jndi-7.4.2.v20110526.jar"/>
+	<classpathentry kind="lib" path="lib/jett7/jetty-overlay-deployer-7.4.2.v20110526.jar"/>
+	<classpathentry kind="lib" path="lib/jett7/jetty-plus-7.4.2.v20110526.jar"/>
+	<classpathentry kind="lib" path="lib/jett7/jetty-policy-7.4.2.v20110526.jar"/>
+	<classpathentry kind="lib" path="lib/jett7/jetty-rewrite-7.4.2.v20110526.jar"/>
+	<classpathentry kind="lib" path="lib/jett7/jetty-security-7.4.2.v20110526.jar"/>
+	<classpathentry kind="lib" path="lib/jett7/jetty-server-7.4.2.v20110526.jar"/>
+	<classpathentry kind="lib" path="lib/jett7/jetty-servlet-7.4.2.v20110526.jar"/>
+	<classpathentry kind="lib" path="lib/jett7/jetty-servlets-7.4.2.v20110526.jar"/>
+	<classpathentry kind="lib" path="lib/jett7/jetty-util-7.4.2.v20110526.jar"/>
+	<classpathentry kind="lib" path="lib/jett7/jetty-webapp-7.4.2.v20110526.jar"/>
+	<classpathentry kind="lib" path="lib/jett7/jetty-websocket-7.4.2.v20110526.jar"/>
+	<classpathentry kind="lib" path="lib/jett7/jetty-xml-7.4.2.v20110526.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
