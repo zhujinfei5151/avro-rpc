@@ -325,6 +325,9 @@ public class TestClient extends AbstractPerformaceTestClient {
     TestClient test = new TestClient("localhost", 7001);
     test.testReturnDTO_Other(SerializerFactory.SERIALIZER_PROTOBUF);
     test.testLis_Other(SerializerFactory.SERIALIZER_PROTOBUF);
+    
+    test.testSimpletypes_Other(SerializerFactory.SERIALIZER_JSON);
+    test.testLis_Other(SerializerFactory.SERIALIZER_JSON);
 
     // test.testReturnDTO_avro();
    /* test.testList_avro();
@@ -353,9 +356,9 @@ public class TestClient extends AbstractPerformaceTestClient {
    */
   public void doAction() throws Exception {
     // this.testList_avro_Async();
-    //this.testReturnDTO_avro_Async();
+    this.testReturnDTO_avro_Async();
      //this.testLis_Async_Other(SerializerFactory.SERIALIZER_HESSIAN);
-    this.testReturnDTO_Async_Other(SerializerFactory.SERIALIZER_PROTOBUF);
+    //this.testReturnDTO_Async_Other(SerializerFactory.SERIALIZER_PROTOBUF);
   }
 
 }

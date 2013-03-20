@@ -14,7 +14,7 @@ import code.google.dsf.test.protobuf.Test.PbList;
  * @author taohuifei
  *
  */
-public class TestServerImp {
+public class TestServerImp implements ITest {
   
   public static final String BEANAME= "/TEST/DTO";
   
