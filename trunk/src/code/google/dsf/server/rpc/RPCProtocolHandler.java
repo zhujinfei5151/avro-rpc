@@ -1,5 +1,6 @@
 package code.google.dsf.server.rpc;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -81,6 +82,9 @@ public class RPCProtocolHandler implements IRPCProtocolHandler {
         Object result = method.invoke(instance, (Object[]) args);
         return putRespond(result, dataPack.getContentType(), rcpMeta);
       }
+    } catch (InvocationTargetException e) {
+      return putRespond( (e).getTargetException(),
+          dataPack.getContentType(), null);
     } catch (Exception e) {
       return putRespond(e, dataPack.getContentType(), null);
     }
@@ -102,8 +106,7 @@ public class RPCProtocolHandler implements IRPCProtocolHandler {
     if (result instanceof Throwable) {
       buffers.add(RESPOND_FALSE);
       String errormsg = ((Throwable) result).getMessage();
-      if(errormsg == null)
-        return buffers;
+      if (errormsg == null) return buffers;
       ByteBuffer data = ByteBuffer.wrap(SerializerFactory.stringToBytes(errormsg));
       buffers.add(data);
       return buffers;
