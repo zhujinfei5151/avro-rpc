@@ -2,6 +2,7 @@ package code.google.dsf.serialize;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * 
@@ -23,18 +24,44 @@ public abstract class SerializerFactory {
 
   // HESSIAN2序列化
   public static final byte SERIALIZER_HESSIAN = (byte) 0x03;
-  
+
   // protobuf序列化
   public static final byte SERIALIZER_PROTOBUF = (byte) 0x04;
 
   private static Map<Byte, ISerializer> serializerHandlerMap = new HashMap<Byte, ISerializer>();
 
-  static {
-    SerializerFactory.registerSerializer(SERIALIZER_AVRO, AvroSerializer.getInstance());
-    SerializerFactory.registerSerializer(SERIALIZER_JSON, JsonSerializer.getInstance());
-    SerializerFactory.registerSerializer(SERIALIZER_HESSIAN, HessianSerializer.getInstance());
-    SerializerFactory.registerSerializer(SERIALIZER_JAVA, JavaSerializer.getInstance());
-    SerializerFactory.registerSerializer(SERIALIZER_PROTOBUF, ProtobufSerializer.getInstance());
+  private static AtomicBoolean isinied = new AtomicBoolean(false);
+
+  public static void registerSerializer() {
+    try {
+      Class.forName("org.apache.avro.Protocol");
+      SerializerFactory.registerSerializer(SERIALIZER_AVRO, AvroSerializer.getInstance());
+    } catch (Exception e) {
+
+    }
+    try {
+      Class.forName("com.alibaba.fastjson.JSON");
+      SerializerFactory.registerSerializer(SERIALIZER_JSON, JsonSerializer.getInstance());
+    } catch (Exception e) {
+
+    }
+    try {
+      Class.forName("com.caucho.hessian.io.Hessian2Input");
+      SerializerFactory.registerSerializer(SERIALIZER_HESSIAN, HessianSerializer.getInstance());
+    } catch (Exception e) {
+
+    }
+    try {
+      SerializerFactory.registerSerializer(SERIALIZER_JAVA, JavaSerializer.getInstance());
+    } catch (Exception e) {
+
+    }
+    try {
+      Class.forName("com.google.protobuf.Message");
+      SerializerFactory.registerSerializer(SERIALIZER_PROTOBUF, ProtobufSerializer.getInstance());
+    } catch (Exception e) {
+
+    }
   }
 
   public static void registerSerializer(byte type, ISerializer serializer) {
@@ -42,6 +69,8 @@ public abstract class SerializerFactory {
   }
 
   public static ISerializer getSerializer(byte type) {
+    if(isinied.compareAndSet(false, true))
+      registerSerializer();
     return serializerHandlerMap.get(Byte.valueOf(type));
   }
 

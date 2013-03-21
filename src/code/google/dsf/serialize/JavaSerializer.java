@@ -1,5 +1,6 @@
 package code.google.dsf.serialize;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -34,12 +35,10 @@ public class JavaSerializer implements ISerializer {
       if(buffer == null || buffer.limit() == 0){
           return null;
       }
-      List<ByteBuffer> lists = new ArrayList<ByteBuffer>();
-      lists.add(buffer);
-      ByteBufferInputStream buffinputStream = new ByteBufferInputStream(lists);
-      ObjectInputStream inputStream = new ObjectInputStream(buffinputStream);
+      ByteArrayInputStream bin = new ByteArrayInputStream(buffer.array());
+      ObjectInputStream inputStream = new ObjectInputStream(bin);
       Object object = inputStream.readObject();
-      buffinputStream.close();
+      bin.close();
       return object;
   } catch (Exception e) {
       throw new RuntimeException(e.getMessage(),e.getCause());
